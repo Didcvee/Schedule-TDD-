@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Таймлиф форма</title>
+    <link th:href="@{/aloha.css}" rel="stylesheet" />
+</head>
+<body>
+<form th:object="${groups}" th:action="@{/aloha}" method="get">
+    <div class="form-group">
+        <label for="group">Group:</label>
+        <select class="form-control" id="group" name="group">
+            <option th:each="group : ${groups}" th:value="${group}" th:text="${group}">Group</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="time">Time:</label>
+        <select class="form-control" id="time" name="time">
+            <option th:each="week : ${weeks}" th:value="${week}" th:text="${week}">Time</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="time">Time:</label>
+        <select class="form-control" id="s" name="s">
+            <option th:each="shedule : ${shedules}" th:value="${shedule}" th:text="${shedule}">sss</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Find</button>
+</form>
+<link href="../static/aloha.css" rel="stylesheet"/>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Group</th>
+        <th>Time</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="shedule : ${shedules}">
+        <td th:text="${shedule.getVa()}"></td>
+        <td th:text="${shedule.getItem()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
