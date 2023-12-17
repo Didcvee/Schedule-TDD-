@@ -2,15 +2,10 @@ package ru.didcvee.raspisanye.integration.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.didcvee.raspisanye.RaspisanyeApplication;
+import org.springframework.test.context.TestConstructor;
 import ru.didcvee.raspisanye.entity.Amogus;
+import ru.didcvee.raspisanye.integration.annotation.IT;
 import ru.didcvee.raspisanye.service.RaspService;
 
 import java.text.SimpleDateFormat;
@@ -18,15 +13,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SpringBootTest
+//@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) // Проставил это в spring.properties
 //@ExtendWith(SpringExtension.class)
 //@ContextConfiguration(classes = RaspisanyeApplication.class, initializers = ConfigDataApplicationContextInitializer.class)
-public class CompanyServiceIT {
+public class CompanyServiceIT extends IntegrationTestBase {
     @Autowired
-    private RaspService raspService;
+    private final RaspService raspService;
     private static final String GROUP_NAME = "IP1-22";
     private static final Date FROM = new Date(123,1,1);
     private static final Date TO = new Date(123,11,31);
+
+    public CompanyServiceIT(RaspService raspService) {
+        this.raspService = raspService;
+    }
+
     @Test
     void findBy(){
 
@@ -38,10 +38,6 @@ public class CompanyServiceIT {
         var expectedResult = List.of(new Amogus(1, "IP1-22","MONDAY","RUSSIAN_LANG",new Date(1)),
                 new Amogus(2,"IP1-22","TUASDAY","VGVDSGW",new Date(1)));
         Assertions.assertEquals(expectedResult,amogusList);
-    }
-    public static String convert(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(date);
     }
 
 }
