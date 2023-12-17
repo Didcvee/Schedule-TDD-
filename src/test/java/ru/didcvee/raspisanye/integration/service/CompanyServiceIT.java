@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 import ru.didcvee.raspisanye.entity.Amogus;
 import ru.didcvee.raspisanye.integration.annotation.IT;
 import ru.didcvee.raspisanye.service.RaspService;
@@ -30,6 +31,8 @@ public class CompanyServiceIT extends IntegrationTestBase {
     }
 
     @Test
+    @Sql({"/papa.sql"})
+    @Transactional
     void findBy(){
 
         List<Amogus> actualResult = raspService.getBy(GROUP_NAME, FROM, TO);

@@ -3,6 +3,7 @@ package ru.didcvee.raspisanye.repo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 import ru.didcvee.raspisanye.integration.service.IntegrationTestBase;
 
 import java.util.List;
@@ -15,6 +16,7 @@ class AlohaRepoTest extends IntegrationTestBase {
     }
     @Test
     @Sql({"/papa.sql"})
+    @Transactional
     void test(){
         List<String> actual = alohaRepo.get();
         Assertions.assertTrue(!actual.isEmpty());
