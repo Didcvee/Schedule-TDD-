@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Расписание группы</title>
+</head>
+<body>
+<h1>Расписание группы</h1>
+
+<form th:action="@{/search}" method="get">
+    <label for="date">Выберите дату:</label>
+    <select id="date" name="date">
+        <option th:each="date : ${dates}" th:value="${date}" th:text="${date}" />
+    </select>
+    <button type="submit">Поиск</button>
+</form>
+
+
+
+<form th:action="@{/edit}" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th>Ordered</th>
+            <th>Week Day</th>
+            <th>Предмет</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="schedule : ${schedules}">
+            <td><input type="text" th:name="|orders[${schedule.id}]|" th:value="${schedule.ordered}" /></td>
+            <td><input type="text" th:name="|weekDays[${schedule.id}]|" th:value="${schedule.weekDay}" /></td>
+            <td><input type="text" th:name="|subjects[${schedule.id}]|" th:value="${schedule.subject}" /></td>
+            <td><input type="text" th:name="|dates[${schedule.id}]|" th:value="${schedule.date}" /></td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="submit">Сохранить</button>
+</form>
+
+</body>
+</html>

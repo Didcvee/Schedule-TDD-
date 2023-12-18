@@ -1,6 +1,7 @@
 package ru.didcvee.raspisanye.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import ru.didcvee.raspisanye.entity.Group;
 import ru.didcvee.raspisanye.repo.GroupRepo;
@@ -20,11 +21,18 @@ public class GroupService {
         return groupRepository.getAll();
     }
 
-    public List<Group> getByFilteringAndPagination(GroupFilteringPag groupFilter) {
+    public Page<Group> getByFilteringAndPagination(GroupFilteringPag groupFilter) {
         return groupRepository.getByFilteringAndPagination(groupFilter);
     }
+    public Group getOne(String name){
+        return groupRepository.findOne(name);
+    }
     public String addGroup(Group group){
-        int i = groupRepository.addGroup(group);
-        throw new RuntimeException("Такая группа уже есть");
+        try {
+            groupRepository.addGroup(group);
+        } catch (RuntimeException exception){
+            throw new RuntimeException("Такая группа уже есть");
+        }
+        return "Успешно";
     }
 }

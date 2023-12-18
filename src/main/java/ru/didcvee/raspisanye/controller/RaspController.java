@@ -2,13 +2,11 @@ package ru.didcvee.raspisanye.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.didcvee.raspisanye.entity.Amogus;
 import ru.didcvee.raspisanye.entity.Group;
-import ru.didcvee.raspisanye.entity.Rasp;
 import ru.didcvee.raspisanye.repo.GroupRepo;
+import ru.didcvee.raspisanye.service.DateService;
 import ru.didcvee.raspisanye.service.RaspService;
 
 import java.text.ParseException;
@@ -17,46 +15,34 @@ import java.util.*;
 
 @Controller
 public class RaspController {
+
+    private static final List<Integer> orders = List.of(1,2,3,4,5,6,7,8,9,10);
+    private static final List<String> weekDays = List.of("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
     private final RaspService raspService;
     private final GroupRepo groupRepo;
+    private final DateService dateService;
 
-    public RaspController(RaspService raspService, GroupRepo groupRepo) {
+    public RaspController(RaspService raspService, GroupRepo groupRepo, DateService dateService) {
         this.raspService = raspService;
         this.groupRepo = groupRepo;
+        this.dateService = dateService;
     }
     @GetMapping("/aloha")
-    public String hello(Model model,@ModelAttribute("group") String group, @ModelAttribute("time")String week){
-        SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH);
-
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        Date startOfWeek = calendar.getTime(); // дата начала недели
-
-        String res1 = outputFormat.format(startOfWeek);
-
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
-        Date endOfWeek = calendar.getTime(); // дата конца недели
-
-        String res2 = outputFormat.format(endOfWeek);
-
-
-        calendar.add(Calendar.DAY_OF_WEEK, 7);
-        Date startOfNextWeek = calendar.getTime(); // дата начала следующей недели
-
-        String res3 = outputFormat.format(startOfNextWeek);
-
-
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
-        Date endOfNextWeek = calendar.getTime(); // дата конца следующей недели
-        String res4 = outputFormat.format(endOfNextWeek);
+    public String hello(Model model, @RequestParam(value = "group", defaultValue = "") String group, @RequestParam(value = "time", defaultValue = "") String week){
+        List<String> dateOfWeek = dateService.getDateOfWeek();
         if(group.isEmpty()){
             model.addAttribute("groups",groupRepo.getAll());
-            model.addAttribute("weeks", List.of(res1 + " - " + res2,res3+" - "+res4));
+            model.addAttribute("weeks", List.of(dateOfWeek.get(0) + " - " + dateOfWeek.get(1)
+                    ,dateOfWeek.get(2)+" - "+dateOfWeek.get(3)));
+            model.addAttribute("stringNameGroup","");
             return "mamasito.html";
         }
-        String[] replaced1 = group.split("=");
-        String replaced = replaced1[1].replaceAll("'", "").replaceAll("}", "");
+
+
+
+
+        model.addAttribute("stringDate",week);
+        model.addAttribute("stringNameGroup",group);
 
 
         String[] dates = week.split(" - ");
@@ -70,19 +56,21 @@ public class RaspController {
         } catch (ParseException e) {
             e.printStackTrace();  // Обработка исключения, если входная строка не соответствует ожидаемому формату
         }
-        List<Amogus> list = raspService.getBy(replaced, date, date1);
+        List<Amogus> list = raspService.getBy(group, date, date1);
 
 
 
         model.addAttribute("shedules",list);
         model.addAttribute("sss","saska");
+        model.addAttribute("weekDays",weekDays);
 
 
 
 
 
         model.addAttribute("groups",groupRepo.getAll());
-        model.addAttribute("weeks", List.of(res1 + " - " + res2,res3+" - "+res4));
+        model.addAttribute("weeks", List.of(dateOfWeek.get(0) + " - " + dateOfWeek.get(1)
+                ,dateOfWeek.get(2)+" - "+dateOfWeek.get(3)));
         return "mamasito.html";
     }
 

@@ -17,6 +17,6 @@ create table rasp
 
 --changeset didcvee:3
 create table group_(
-    name varchar,
+    name varchar primary key ,
     people_count int
 );

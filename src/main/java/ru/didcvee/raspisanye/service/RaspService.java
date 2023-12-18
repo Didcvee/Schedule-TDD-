@@ -8,6 +8,7 @@ import ru.didcvee.raspisanye.repo.RaspRepo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -19,7 +20,7 @@ public class RaspService {
         this.repo = repo;
     }
     @Transactional(readOnly = true)
-    public List<Amogus> getBy(String group, Date from, Date to){
+    public Map<String,List<Amogus>> getBy(String group, Date from, Date to){
         return repo.getBy(group, from, to);
     }
 }

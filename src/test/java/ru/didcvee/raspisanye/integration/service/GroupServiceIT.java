@@ -1,5 +1,6 @@
 package ru.didcvee.raspisanye.integration.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -34,11 +35,12 @@ public class GroupServiceIT extends IntegrationTestBase {
     }
     @Test
     void addGroup(){
-//        Group group = new Group("Group 1", 23);
-//        groupRepo.addGroup(group); // добавляем группу в репозиторий
+        Group group = new Group("Group 23", 23);
+        String actual = groupService.addGroup(group);
+        Assertions.assertEquals("Успешно",actual);
 
         assertThatThrownBy(() -> {
-            groupService.addGroup(new Group("dwqdw",123)); // вызываем метод с той же группой
+            groupService.addGroup(new Group("Group 23",123)); // вызываем метод с той же группой
         }).isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Такая группа уже есть");
 

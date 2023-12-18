@@ -5,8 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.didcvee.raspisanye.entity.Amogus;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class RaspRepo {
@@ -21,7 +20,7 @@ public class RaspRepo {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Amogus> getBy(String groupName, Date from, Date to) {
+    public Map<String,List<Amogus>> getBy(String groupName, Date from, Date to) {
 //        java.sql.Date date1 = new java.sql.Date(from.getTime());
 //        java.sql.Date date2 = new java.sql.Date(to.getTime());
 //        Calendar calendar = Calendar.getInstance();
@@ -64,8 +63,14 @@ public class RaspRepo {
                 new Object[] { groupName, from, to },
                 rowMapper
         );
+        Map<String,List<Amogus>> map = new HashMap<>();
+        map.put("MONDAY",new ArrayList<>());
+        map.put("TUASDAY",new ArrayList<>());
+        for (int i = 0; i < result.size(); i++) {
+            map.get(result.get(i).getAs()).add(result.get(i));
+        }
         System.out.println(result);
-        return result;
+        return map;
 
     }
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/soska.css}" rel="stylesheet" />
+
+</head>
+<body>
+<form action="#" th:action="@{/search}" method="get">
+    <input type="text" name="groupName" placeholder="Введите имя группы" th:value="${groupName}" />
+    <button type="submit">Поиск</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>Название группы</th>
+        <th>Количество учеников</th>
+       <th/>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${groups.getContent()}">
+        <td th:text="${group.name}"></td>
+        <td th:text="${group.countPeople}"></td>
+        <td ><a th:href="@{/rasp/{name}(name = ${group.getName()})}" th:text="Редактировать группу"></a></td>
+        <td ><a th:href="@{/rasp/{name}(name = ${group.getName()})}" th:text="Редактировать расписание"></a></td>
+    </tr>
+    </tbody>
+</table>
+<link href="../static/soska.css" rel="stylesheet"/>
+<div class="pagination">
+    <a th:each="pageNumber : ${pageNumbers}"
+       th:href="@{/search(size=${groups.size}, page=${pageNumber}, groupName=${groupName})}"
+       th:text="${pageNumber+1}"
+       th:class="${pageNumber==groups.number} ? 'active'"></a>
+</div>
+</body>
+</html>

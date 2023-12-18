@@ -5,6 +5,8 @@ public class GroupFilteringPag {
     int size;
     String nameGroup;
 
+    String sort;
+
     public int getPage() {
         return page;
     }
@@ -29,9 +31,18 @@ public class GroupFilteringPag {
         this.nameGroup = nameGroup;
     }
 
-    public GroupFilteringPag(int page, int size, String nameGroup) {
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public GroupFilteringPag(int page, int size, String nameGroup, String sort) {
         this.page = page;
         this.size = size;
         this.nameGroup = nameGroup;
+        this.sort = sort;
     }
 }

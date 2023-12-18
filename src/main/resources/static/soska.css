@@ -1,0 +1,90 @@
+/*.pagination {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    margin-top: 20px;*/
+/*}*/
+
+/*.pagination a {*/
+/*    margin: 0 5px;*/
+/*    padding: 5px 10px;*/
+/*    text-decoration: none;*/
+/*    color: #000;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.pagination a.active {*/
+/*    background-color: #000;*/
+/*    color: #fff;*/
+/*}*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    color: #fff;
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+link {
+    color: blue;
+    font-size: 16px;
+}
